@@ -1,11 +1,5 @@
 #!/usr/bin/env groovy
-
-def call(){
-    echo ' building docker image .....'
-    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        sh 'docker build . -t alaa0ali/mavnapp:1.2'
-        echo "username is $USERNAME "
-        sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
-        echo "push docker image to dockerhub"
-        sh 'docker push alaa0ali/mavnapp:1.2'
-}}
+import com.example.Docker
+def call(string imageName){
+    return new Docker(this).buildDockerImage(imageName)
+}
